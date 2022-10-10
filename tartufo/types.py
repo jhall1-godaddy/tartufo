@@ -84,6 +84,8 @@ class GlobalOptions:
     :param entropy_sensitivity: A number from 0 - 100 representing the
       sensitivity of entropy scans. A value of 0 will detect totally non-random
       values, while a value of 100 will detect only wholly random values.
+    :param normalize_signatures: Whether or not to normalize signatures
+      for all operating systems 
     """
 
     __slots__ = (
@@ -110,6 +112,7 @@ class GlobalOptions:
         "b64_entropy_score",
         "hex_entropy_score",
         "entropy_sensitivity",
+        "normalize_signatures",
     )
     rules: Tuple[TextIO, ...]
     rule_patterns: Tuple[Dict[str, str], ...]
@@ -134,6 +137,7 @@ class GlobalOptions:
     b64_entropy_score: float
     hex_entropy_score: float
     entropy_sensitivity: int
+    normalize_signatures: bool
 
 
 @dataclass

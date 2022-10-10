@@ -903,6 +903,9 @@ class GitRepoScanner(GitScanner):
                 already_searched.add(diff_hash)
                 diff.find_similar()
                 for blob, file_path in self._iter_diff_index(diff):
+                    if self.global_options.normalize_signatures:
+                        file_path = util.normalize_path(file_path)
+
                     yield types.Chunk(
                         blob,
                         file_path,
@@ -916,6 +919,9 @@ class GitRepoScanner(GitScanner):
                 tree_diff: pygit2.Diff = tree.diff_to_tree(swap=True)
                 iter_diff = self._iter_diff_index(tree_diff)
                 for blob, file_path in iter_diff:
+                    if self.global_options.normalize_signatures:
+                        file_path = util.normalize_path(file_path)
+
                     yield types.Chunk(
                         blob,
                         file_path,
@@ -964,6 +970,9 @@ class GitPreCommitScanner(GitScanner):
             | pygit2.GIT_DIFF_SHOW_UNTRACKED_CONTENT,
         )
         for blob, file_path in self._iter_diff_index(diff_index):
+            if self.global_options.normalize_signatures:
+                file_path = util.normalize_path(file_path)
+
             yield types.Chunk(blob, file_path, {}, True)
 
 
@@ -991,6 +1000,9 @@ class FolderScanner(ScannerBase):
         """Yield the individual files in the target directory."""
 
         for blob, file_path in self._iter_folder():
+            if self.global_options.normalize_signatures:
+                file_path = util.normalize_path(file_path)
+
             yield types.Chunk(blob, file_path, {}, False)
 
     def _iter_folder(self) -> Generator[Tuple[str, str], None, None]:

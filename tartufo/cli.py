@@ -250,6 +250,15 @@ class TartufoCLI(click.MultiCommand):
     string will be identified as suspicious.""",
 )
 @click.option(
+    "--normalize-signatures/--no-normalize-signatures",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="""Whether or not to normalize signature generation across platforms.
+    If normalizing signatures all backslashes are replaced with slashes prior to
+    signature generation. Off by default for backwards compatibility.""",
+)
+@click.option(
     "-b64",
     "--b64-entropy-score",
     help="""[DEPRECATED] Use `--entropy-sensitivity`. Modify the base64 entropy score. If

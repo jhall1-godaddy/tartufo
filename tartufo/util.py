@@ -195,6 +195,14 @@ def generate_signature(snippet: str, filename: str) -> str:
     return blake2s(f"{snippet}$${filename}".encode("utf-8")).hexdigest()
 
 
+def normalize_path(path: str) -> str:
+    """Returns a normalized path with backslashes replaced with slashes.
+
+    :param path: The path to normalize
+    """
+    return path.replace("\\", "/")
+
+
 def extract_commit_metadata(commit: pygit2.Commit, branch_name: str) -> Dict[str, Any]:
     """Grab a consistent set of metadata from a git commit, for user output.
 
